@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birigogo.gr | Explore Greek Myths, Tragedies, Comedies</title>
+  <meta name="description" content="Interactive educational apps for Homer's Odyssey and Ancient Greek dramas. Download on App Store and Google Play.">
+  <meta property="og:title" content="Birigogo.gr | The Odyssey by Homer — Now Available">
+  <meta property="og:description" content="The journey that shaped every journey after it. Homer's epic as an original interactive educational experience.">
+  <meta property="og:image" content="images/od_hero.jpg">
+  <meta property="og:url" content="https://www.birigogo.gr">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET & ROOT ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:       #0B1D26;
+      --dark-teal:  #0A2530;
+      --teal:       #3AABAA;
+      --teal-light: #5ECFCE;
+      --terra:      #E05A3A;
+      --terra-dark: #C84B30;
+      --gold:       #E8913F;
+      --sand:       #F5E6C8;
+      --sand-dark:  #D4C8A8;
+      --white:      #FFFFFF;
+      --font-head:  'Cinzel', serif;
+      --font-body:  'Lato', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--sand);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ─── HEADER ────────────────────────────────────────── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(11, 29, 38, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(58, 171, 170, 0.15);
+    }
+
+    .logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sand-dark);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--teal); }
+
+    .lang-toggle {
+      display: flex;
+      gap: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 3px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--sand-dark);
+      padding: 5px 12px;
+      border-radius: 16px;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--terra);
+      color: var(--white);
+    }
+
+    /* ─── HERO ──────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 40px 60px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/od_hero.jpg');
+      background-size: cover;
+      background-position: center top;
+      filter: brightness(0.35);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+
+    #hero:hover .hero-bg { transform: scale(1.0); }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .new-badge {
+      display: inline-block;
+      background: var(--terra);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 4px;
+      padding: 6px 20px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero-content h1 {
+      font-family: var(--font-head);
+      font-size: clamp(36px, 6vw, 76px);
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle-small {
+      font-family: var(--font-head);
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-tagline {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--sand);
+      font-style: italic;
+      margin-bottom: 48px;
+      opacity: 0.9;
+    }
+
+    .store-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.25s;
+      border: 2px solid transparent;
+    }
+
+    .store-btn.apple {
+      background: var(--white);
+      color: #000;
+    }
+
+    .store-btn.apple:hover {
+      background: transparent;
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .store-btn.google {
+      background: var(--terra);
+      color: var(--white);
+    }
+
+    .store-btn.google:hover {
+      background: var(--terra-dark);
+    }
+
+    .store-btn.coming-soon {
+      background: var(--terra);
+      color: var(--white);
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .store-btn.coming-soon:hover {
+      background: var(--terra-dark);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,15,20,0.88);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #0D2230;
+      border: 1px solid rgba(58,171,170,0.2);
+      border-radius: 8px;
+      padding: 56px 48px 48px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none;
+      border: none;
+      color: var(--sand-dark);
+      font-size: 22px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+      line-height: 1;
+    }
+
+    .modal-close:hover { opacity: 1; }
+
+    .modal-icon {
+      font-size: 40px;
+      margin-bottom: 24px;
+    }
+
+    .modal-box h3 {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .modal-box p {
+      font-size: 14px;
+      color: var(--sand-dark);
+      line-height: 1.8;
+      opacity: 0.8;
+      margin-bottom: 32px;
+    }
+
+    .modal-box .modal-tag {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--teal);
+      border: 1px solid rgba(58,171,170,0.3);
+      padding: 6px 16px;
+      border-radius: 2px;
+    }
+
+    .store-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .store-btn-label { display: flex; flex-direction: column; text-align: left; }
+    .store-btn-label span:first-child { font-size: 9px; font-weight: 400; opacity: 0.7; }
+    .store-btn-label span:last-child { font-size: 14px; font-weight: 700; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.5;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-hint span { font-size: 10px; letter-spacing: 2px; }
+    .scroll-hint::after { content: '↓'; font-size: 20px; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── SECTION COMMON ────────────────────────────────── */
+    section { padding: 100px 40px; }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-family: var(--font-head);
+      font-size: clamp(13px, 2vw, 16px);
+      letter-spacing: 3px;
+      color: var(--teal);
+      font-weight: 400;
+      margin-bottom: 32px;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ─── ODYSSEY DETAIL ────────────────────────────────── */
+    #odyssey {
+      background: var(--dark-teal);
+    }
+
+    .odyssey-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 80px;
+    }
+
+    .odyssey-text p {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--sand-dark);
+      margin-bottom: 16px;
+    }
+
+    .odyssey-text .discover-line {
+      font-family: var(--font-head);
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--teal);
+      margin: 32px 0;
+    }
+
+    .questions {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--sand);
+      line-height: 2;
+      opacity: 0.85;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-top: 32px;
+    }
+
+    .feature-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(58,171,170,0.12);
+      font-size: 13px;
+      color: var(--sand-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature-list li::before {
+      content: '—';
+      color: var(--terra);
+      font-weight: 700;
+    }
+
+    /* ─── IMAGE SLIDER ──────────────────────────────────── */
+    .slider-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    /* DROP SHADOW on Odyssey images — added because originals lack shadows */
+    .slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0px 20px 40px rgba(0,0,0,0.6))
+              drop-shadow(4px 8px 16px rgba(10,37,48,0.8));
+      border-radius: 4px;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10,37,48,0.8);
+      border: 1px solid rgba(58,171,170,0.3);
+      color: var(--teal);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+
+    .slider-btn:hover {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: var(--white);
+    }
+
+    .slider-btn.prev { left: 16px; }
+    .slider-btn.next { right: 16px; }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(58,171,170,0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .dot.active {
+      background: var(--terra);
+      transform: scale(1.4);
+    }
+
+    /* Full-width slider variant */
+    .slider-fullwidth {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ─── THE BIRDS ─────────────────────────────────────── */
+    #birds {
+      background: #071820;
+      border-top: 1px solid rgba(58,171,170,0.08);
+    }
+
+    .birds-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .birds-image-col {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .birds-image-col img {
+      max-height: 420px;
+      width: auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+    }
+
+    /* ─── COLLECTION ────────────────────────────────────── */
+    #collection {
+      background: #0F1A10;
+      position: relative;
+    }
+
+    .collection-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .collection-header h2 { color: var(--white); }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+      margin-bottom: 80px;
+      border: 1px solid rgba(58,171,170,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .collection-item {
+      padding: 28px 20px;
+      background: rgba(255,255,255,0.02);
+      text-align: center;
+      border-right: 1px solid rgba(58,171,170,0.08);
+      transition: background 0.2s;
+    }
+
+    .collection-item:last-child { border-right: none; }
+    .collection-item:hover { background: rgba(58,171,170,0.06); }
+
+    .collection-item .author {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    .collection-item .coming-tag {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--terra);
+      border: 1px solid rgba(224,90,58,0.4);
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-top: 10px;
+      font-family: var(--font-head);
+    }
+
+    .collection-item .available-tag {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--teal);
+      border: 1px solid rgba(58,171,170,0.4);
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-top: 10px;
+      font-family: var(--font-head);
+    }
+
+    /* ─── VIDEO ─────────────────────────────────────────── */
+    .video-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .video-wrap video {
+      width: 100%;
+      display: block;
+    }
+
+    .video-title {
+      text-align: center;
+      margin-bottom: 32px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--teal);
+      text-transform: uppercase;
+    }
+
+    .languages-note {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 13px;
+      color: var(--sand-dark);
+      opacity: 0.7;
+      letter-spacing: 1px;
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────────── */
+    #about {
+      background: var(--dark);
+      border-top: 1px solid rgba(58,171,170,0.08);
+    }
+
+    .about-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-inner h2 { margin-bottom: 40px; }
+
+    .about-inner p {
+      font-size: 15px;
+      color: var(--sand-dark);
+      margin-bottom: 20px;
+      line-height: 1.9;
+      opacity: 0.85;
+    }
+
+    .about-list {
+      list-style: none;
+      text-align: left;
+      margin: 40px 0;
+      border-top: 1px solid rgba(58,171,170,0.12);
+    }
+
+    .about-list li {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(58,171,170,0.12);
+      font-size: 14px;
+      color: var(--sand-dark);
+      display: flex;
+      gap: 16px;
+    }
+
+    .about-list li::before {
+      content: '—';
+      color: var(--terra);
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: #050F14;
+      padding: 48px 40px;
+      border-top: 1px solid rgba(58,171,170,0.1);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-logo img { height: 28px; opacity: 0.7; }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--sand-dark);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      font-family: var(--font-head);
+      text-transform: uppercase;
+    }
+
+    .footer-social a:hover { opacity: 1; }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--sand-dark);
+      opacity: 0.35;
+      font-family: var(--font-head);
+      letter-spacing: 1px;
+    }
+
+    /* ─── DIVIDER ────────────────────────────────────────── */
+    .ornament {
+      text-align: center;
+      margin: 48px 0;
+      color: var(--terra);
+      opacity: 0.4;
+      letter-spacing: 8px;
+      font-size: 14px;
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      header { padding: 14px 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 24px; }
+
+      .odyssey-layout,
+      .birds-layout { grid-template-columns: 1fr; gap: 48px; }
+
+      .collection-grid { grid-template-columns: 1fr 1fr; }
+      .collection-item:nth-child(2) { border-right: none; }
+      .collection-item:nth-child(even) { border-right: none; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    /* Placeholder για Odyssey εικόνες όταν δεν υπάρχουν ακόμα */
+    .slide img[src^="images/od_"] {
+      min-height: 300px;
+      background: #0A2530;
+      object-fit: cover;
+    }
+    .slide img:not([src]),.slide img[src=""] {
+      display: block;
+      min-height: 300px;
+      background: linear-gradient(135deg,#0A2530,#0F3A4A);
+    }
+    .hero-bg[style*="od_hero"] {
+      background-color: #0A2530;
+    }
+
+    @media (max-width: 600px) {
+      .store-buttons { flex-direction: column; align-items: center; }
+      .collection-grid { grid-template-columns: 1fr; }
+      .collection-item { border-right: none; border-bottom: 1px solid rgba(58,171,170,0.08); }
+    }
+  </style>
+</head>
+
+<body class="lang-en">
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+  <header>
+    <a href="#" class="logo">
+      <img src="images/logo.png" alt="Birigogo">
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#odyssey"><span class="en-text">The Odyssey</span><span class="gr-text">Η Οδύσσεια</span></a></li>
+        <li><a href="#birds"><span class="en-text">The Birds</span><span class="gr-text">Οι Όρνιθες</span></a></li>
+        <li><a href="#collection"><span class="en-text">Coming Soon</span><span class="gr-text">Έρχεται</span></a></li>
+      </ul>
+
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('gr')">ΕΛ</button>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ═══ HERO ══════════════════════════════════════════════ -->
+  <!-- Background image: images/od_hero.jpg — the ΟΔΥΣΣΕΙΑ sail/title screen -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+
+    <div class="hero-content">
+      <div class="new-badge">
+        <span class="en-text">★ NOW AVAILABLE ★</span>
+        <span class="gr-text">★ ΤΩΡΑ ΔΙΑΘΕΣΙΜΗ ★</span>
+      </div>
+
+      <div style="position:relative; display:inline-block;">
+        <h1 style="margin:0;">
+          <span class="en-text">THE ODYSSEY<br>BY HOMER</span>
+          <span class="gr-text">Η ΟΔΥΣΣΕΙΑ<br>ΤΟΥ ΟΜΗΡΟΥ</span>
+        </h1>
+        <div style="position:absolute; bottom:-80px; right:-90px; transform:rotate(-15deg); filter:drop-shadow(3px 6px 16px rgba(0,0,0,0.7)); z-index:10;">
+          <svg width="190" height="190" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="75" cy="75" r="70" fill="#E05A3A"/>
+            <circle cx="75" cy="75" r="63" fill="none" stroke="#fff" stroke-width="1.8" stroke-dasharray="5 3.5"/>
+            <text x="75" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#fff" letter-spacing="3" class="en-text">THE ODYSSEY</text>
+            <text x="75" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#fff" letter-spacing="2" class="gr-text">Η ΟΔΥΣΣΕΙΑ</text>
+            <line x1="28" y1="43" x2="122" y2="43" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+            <text x="75" y="73" text-anchor="middle" font-family="Georgia,serif" font-size="44" font-weight="700" fill="#fff">#1</text>
+            <line x1="28" y1="88" x2="122" y2="88" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+            <text x="75" y="104" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F5E6C8" letter-spacing="1" class="en-text">Entertainment</text>
+            <text x="75" y="104" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F5E6C8" letter-spacing="0.5" class="gr-text">Ψυχαγωγία</text>
+            <text x="75" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#F5E6C8" letter-spacing="0.8" class="en-text">Greek App Store</text>
+            <text x="75" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#F5E6C8" letter-spacing="0.5" class="gr-text">στο Ελληνικό App Store</text>
+          </svg>
+        </div>
+      </div>
+
+      <p class="hero-subtitle-small">
+        <span class="en-text">Homer's Epic, Reimagined</span>
+        <span class="gr-text">Το Έπος του Ομήρου Ξαναζωντανεύει</span>
+      </p>
+
+      <p class="hero-tagline">
+        <span class="en-text">The journey that shaped every journey after it.</span>
+        <span class="gr-text">Το ταξίδι που διαμόρφωσε κάθε ταξίδι που ακολούθησε.</span>
+      </p>
+
+      <div class="store-buttons">
+        <a href="https://apps.apple.com/app/id6793947556" class="store-btn apple" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="store-btn-label">
+            <span class="en-text">Download on the</span>
+            <span class="gr-text">Κατέβασε από</span>
+            <span>App Store</span>
+          </div>
+        </a>
+
+        <a href="https://play.google.com/store/apps/details?id=com.DigitalInnovations.Odyssey" class="store-btn google" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.8.23 1.2.06L15.93 12 4.38.18c-.4-.17-.83-.15-1.2.06C2.46.66 2 1.39 2 2.2v19.6c0 .81.46 1.54 1.18 1.96zM17.34 13.41l2.69 2.69-9.26 5.34 6.57-8.03zm2.85-3.76L17.34 10.6 10.77 2.56l9.42 5.44c.8.46.8 1.19 0 1.65zM5.97 1.55l10.09 10.09-2.43 2.43L5.97 1.55z"/></svg>
+          <div class="store-btn-label">
+            <span class="en-text">Get it on</span>
+            <span class="gr-text">Διαθέσιμο στο</span>
+            <span>Google Play</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span class="en-text">EXPLORE</span>
+      <span class="gr-text">ΕΞΕΡΕΥΝΗΣΕ</span>
+    </div>
+  </section>
+
+
+  <!-- ═══ ODYSSEY DETAIL ════════════════════════════════════ -->
+  <section id="odyssey">
+    <div class="section-inner">
+
+      <div class="odyssey-layout">
+
+        <div class="odyssey-text">
+          <p class="section-label">
+            <span class="en-text">Interactive Educational App</span>
+            <span class="gr-text">Διαδραστική Εκπαιδευτική Εφαρμογή</span>
+          </p>
+
+          <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+            <h2 style="margin:0;">
+              <span class="en-text">The Odyssey<br>by Homer</span>
+              <span class="gr-text">Η Οδύσσεια<br>του Ομήρου</span>
+            </h2>
+            <div style="transform:rotate(-12deg); flex-shrink:0; filter:drop-shadow(1px 3px 8px rgba(0,0,0,0.4));">
+              <svg width="90" height="90" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="75" cy="75" r="70" fill="#E05A3A"/>
+                <circle cx="75" cy="75" r="63" fill="none" stroke="#fff" stroke-width="1.8" stroke-dasharray="5 3.5"/>
+                <text x="75" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#fff" letter-spacing="3" class="en-text">THE ODYSSEY</text>
+                <text x="75" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#fff" letter-spacing="2" class="gr-text">Η ΟΔΥΣΣΕΙΑ</text>
+                <line x1="28" y1="43" x2="122" y2="43" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                <text x="75" y="73" text-anchor="middle" font-family="Georgia,serif" font-size="44" font-weight="700" fill="#fff">#1</text>
+                <line x1="28" y1="88" x2="122" y2="88" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                <text x="75" y="104" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F5E6C8" letter-spacing="1" class="en-text">Entertainment</text>
+                <text x="75" y="104" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#F5E6C8" letter-spacing="0.5" class="gr-text">Ψυχαγωγία</text>
+                <text x="75" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#F5E6C8" letter-spacing="0.8" class="en-text">Greek App Store</text>
+                <text x="75" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#F5E6C8" letter-spacing="0.5" class="gr-text">στο Ελληνικό App Store</text>
+              </svg>
+            </div>
+          </div>
+
+          <p class="discover-line">DISCOVER · PLAY · LEARN</p>
+
+          <p>
+            <span class="en-text">After ten years of war, Odysseus leaves Troy and begins the most legendary voyage in world literature. Across unknown seas, he will confront the Cyclops, resist the song of the Sirens, encounter Circe and Calypso, descend into the world of the dead, and struggle against the will of gods and monsters.</span>
+            <span class="gr-text">Ύστερα από δέκα χρόνια πολέμου, ο Οδυσσέας εγκαταλείπει την Τροία και ξεκινά το πιο θρυλικό ταξίδι της παγκόσμιας λογοτεχνίας. Σε άγνωστες θάλασσες θα αντιμετωπίσει τον Κύκλωπα, θα αντισταθεί στο τραγούδι των Σειρήνων, θα συναντήσει την Κίρκη και την Καλυψώ.</span>
+          </p>
+
+          <p class="questions">
+            <span class="en-text">Will intelligence prove stronger than force?<br>
+            What does "home" really mean?<br>
+            And how far must someone travel before discovering who they truly are?</span>
+            <span class="gr-text">Μπορεί η ευφυΐα να αποδειχθεί ισχυρότερη από τη δύναμη;<br>
+            Τι σημαίνει πραγματικά «σπίτι»;<br>
+            Και πόσο μακριά πρέπει να ταξιδέψει κάποιος για να ανακαλύψει ποιος είναι;</span>
+          </p>
+
+          <ul class="feature-list">
+            <li><span class="en-text">Original narration and storytelling</span><span class="gr-text">Πρωτότυπη αφήγηση και storytelling</span></li>
+            <li><span class="en-text">Illustrated characters and environments</span><span class="gr-text">Εικονογραφημένοι χαρακτήρες και κόσμοι</span></li>
+            <li><span class="en-text">Music and sound design</span><span class="gr-text">Μουσική και ηχητικός σχεδιασμός</span></li>
+            <li><span class="en-text">Simple and meaningful interactions</span><span class="gr-text">Απλές και ουσιαστικές διαδράσεις</span></li>
+            <li><span class="en-text">Greek and English — more languages coming</span><span class="gr-text">Ελληνικά και αγγλικά — περισσότερες γλώσσες έρχονται</span></li>
+          </ul>
+
+          <div style="margin-top: 40px;">
+            <div class="store-buttons" style="justify-content: flex-start;">
+              <a href="https://apps.apple.com/app/id6793947556" class="store-btn apple" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                <div class="store-btn-label">
+                  <span class="en-text">App Store</span><span class="gr-text">App Store</span>
+                </div>
+              </a>
+              <a href="https://play.google.com/store/apps/details?id=com.DigitalInnovations.Odyssey" class="store-btn google" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.8.23 1.2.06L15.93 12 4.38.18c-.4-.17-.83-.15-1.2.06C2.46.66 2 1.39 2 2.2v19.6c0 .81.46 1.54 1.18 1.96zM17.34 13.41l2.69 2.69-9.26 5.34 6.57-8.03zm2.85-3.76L17.34 10.6 10.77 2.56l9.42 5.44c.8.46.8 1.19 0 1.65zM5.97 1.55l10.09 10.09-2.43 2.43L5.97 1.55z"/></svg>
+                <div class="store-btn-label">
+                  <span class="en-text">Get it on</span><span class="gr-text">Διαθέσιμο στο</span>
+                  <span>Google Play</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Image slider — 5 actual images from the app -->
+        <div>
+          <div class="slider-wrap" id="odysseySlider">
+            <div class="slider-track" id="odysseyTrack">
+              <div class="slide"><img src="images/od_trireme.jpg" alt="The Trireme"></div>
+              <div class="slide"><img src="images/od_gods.jpg" alt="Gods of Olympus"></div>
+              <div class="slide"><img src="images/od_cyclops.jpg" alt="Cyclops Polyphemus"></div>
+              <div class="slide"><img src="images/od_sirens.jpg" alt="The Sirens"></div>
+              <div class="slide"><img src="images/od_scylla.jpg" alt="Scylla and Charybdis"></div>
+            </div>
+
+            <button class="slider-btn prev" onclick="slideMove(-1, 'odysseyTrack', 'odysseyDots')">&#8592;</button>
+            <button class="slider-btn next" onclick="slideMove(1, 'odysseyTrack', 'odysseyDots')">&#8594;</button>
+          </div>
+
+          <div class="slider-dots" id="odysseyDots">
+            <button class="dot active" onclick="slideTo(0, 'odysseyTrack', 'odysseyDots')"></button>
+            <button class="dot" onclick="slideTo(1, 'odysseyTrack', 'odysseyDots')"></button>
+            <button class="dot" onclick="slideTo(2, 'odysseyTrack', 'odysseyDots')"></button>
+            <button class="dot" onclick="slideTo(3, 'odysseyTrack', 'odysseyDots')"></button>
+            <button class="dot" onclick="slideTo(4, 'odysseyTrack', 'odysseyDots')"></button>
+          </div>
+        </div>
+
+      </div><!-- end .odyssey-layout -->
+
+    </div>
+  </section>
+
+
+  <!-- ═══ THE BIRDS ═════════════════════════════════════════ -->
+  <section id="birds">
+    <div class="section-inner">
+      <div class="birds-layout">
+
+        <div class="birds-image-col">
+          <img src="images/birds_hoopoe.png" alt="The Hoopoe — The Birds by Aristophanes">
+        </div>
+
+        <div>
+          <p class="section-label">
+            <span class="en-text">Also Available</span>
+            <span class="gr-text">Διαθέσιμο Ήδη</span>
+          </p>
+
+          <h2>
+            <span class="en-text">The Birds<br>by Aristophanes</span>
+            <span class="gr-text">Οι Όρνιθες<br>του Αριστοφάνη</span>
+          </h2>
+
+          <h3>
+            <span class="en-text">The ancient comedy — in Greek, English & Chinese</span>
+            <span class="gr-text">Η αρχαία κωμωδία — σε ελληνικά, αγγλικά & κινέζικα</span>
+          </h3>
+
+          <p style="font-size:15px; color: var(--sand-dark); line-height:1.9; margin-bottom:24px;">
+            <span class="en-text">Two Athenian friends dream of building a new city in the sky — the city of birds, between the world of men and the world of the gods. Aristophanes' masterpiece as an original interactive educational experience.</span>
+            <span class="gr-text">Δύο Αθηναίοι φίλοι ονειρεύονται να ιδρύσουν μια νέα πόλη στους αιθέρες — την πόλη των πουλιών, μεταξύ κόσμου ανθρώπων και θεών. Το αριστούργημα του Αριστοφάνη σε πρωτότυπο διαδραστικό εκπαιδευτικό βιβλίο-παιχνίδι.</span>
+          </p>
+
+          <div class="store-buttons" style="justify-content:flex-start;">
+            <a href="https://apps.apple.com/tt/app/the-birds/id1632955793" class="store-btn apple" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              <div class="store-btn-label"><span>App Store</span></div>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.Birigogo.Ornithes" class="store-btn google" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.8.23 1.2.06L15.93 12 4.38.18c-.4-.17-.83-.15-1.2.06C2.46.66 2 1.39 2 2.2v19.6c0 .81.46 1.54 1.18 1.96zM17.34 13.41l2.69 2.69-9.26 5.34 6.57-8.03zm2.85-3.76L17.34 10.6 10.77 2.56l9.42 5.44c.8.46.8 1.19 0 1.65zM5.97 1.55l10.09 10.09-2.43 2.43L5.97 1.55z"/></svg>
+              <div class="store-btn-label"><span>Google Play</span></div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ COLLECTION / COMING SOON ══════════════════════════ -->
+  <section id="collection">
+    <div class="section-inner">
+
+      <div class="collection-header">
+        <p class="section-label">
+          <span class="en-text">Coming Very Soon</span>
+          <span class="gr-text">Έρχονται Άμεσα</span>
+        </p>
+        <h2>
+          <span class="en-text">The Birigogo Collection</span>
+          <span class="gr-text">Η Συλλογή Birigogo</span>
+        </h2>
+        <p style="max-width:600px; margin:16px auto 0; font-size:15px; color:var(--sand-dark); opacity:0.8;">
+          <span class="en-text">Ten more ancient tragedies and comedies — arriving soon. Available in Greek and English, with more languages added continuously.</span>
+          <span class="gr-text">Δέκα ακόμα αρχαίες τραγωδίες και κωμωδίες — έρχονται άμεσα. Σε ελληνικά και αγγλικά, με περισσότερες γλώσσες να προστίθενται συνεχώς.</span>
+        </p>
+      </div>
+
+      <div class="collection-grid">
+        <div class="collection-item">
+          <div class="author">HOMER</div>
+          <div style="font-family:var(--font-head); font-size:13px; color:var(--white);">
+            <span class="en-text">The Odyssey</span><span class="gr-text">Η Οδύσσεια</span>
+          </div>
+          <div class="available-tag">
+            <span class="en-text">AVAILABLE NOW</span><span class="gr-text">ΔΙΑΘΕΣΙΜΗ</span>
+          </div>
+        </div>
+        <div class="collection-item">
+          <div class="author">ARISTOPHANES</div>
+          <div style="font-family:var(--font-head); font-size:13px; color:var(--white);">
+            <span class="en-text">The Birds</span><span class="gr-text">Οι Όρνιθες</span>
+          </div>
+          <div class="available-tag">
+            <span class="en-text">AVAILABLE NOW</span><span class="gr-text">ΔΙΑΘΕΣΙΜΟΙ</span>
+          </div>
+        </div>
+        <div class="collection-item">
+          <div class="author">SOPHOCLES</div>
+          <div style="font-family:var(--font-head); font-size:13px; color:var(--white);">
+            <span class="en-text">Tragedies</span><span class="gr-text">Τραγωδίες</span>
+          </div>
+          <div class="coming-tag">
+            <span class="en-text">COMING SOON</span><span class="gr-text">ΕΡΧΕΤΑΙ</span>
+          </div>
+        </div>
+        <div class="collection-item">
+          <div class="author">EURIPIDES</div>
+          <div style="font-family:var(--font-head); font-size:13px; color:var(--white);">
+            <span class="en-text">Tragedies</span><span class="gr-text">Τραγωδίες</span>
+          </div>
+          <div class="coming-tag">
+            <span class="en-text">COMING SOON</span><span class="gr-text">ΕΡΧΕΤΑΙ</span>
+          </div>
+        </div>
+        <div class="collection-item">
+          <div class="author">AESCHYLUS</div>
+          <div style="font-family:var(--font-head); font-size:13px; color:var(--white);">
+            <span class="en-text">Tragedies</span><span class="gr-text">Τραγωδίες</span>
+          </div>
+          <div class="coming-tag">
+            <span class="en-text">COMING SOON</span><span class="gr-text">ΕΡΧΕΤΑΙ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO TRAILER -->
+      <p class="video-title">
+        <span class="en-text">Watch the Trailer</span>
+        <span class="gr-text">Δες το Trailer</span>
+      </p>
+
+      <div class="video-wrap">
+        <div style="padding:56.25% 0 0 0; position:relative;">
+          <iframe src="https://player.vimeo.com/video/1212153232?h=c0276afed2&color=3AABAA&title=0&byline=0&portrait=0"
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;"
+                  frameborder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <p class="languages-note">
+        <span class="en-text">birigogo.gr · Interactive Educational Applications · Greek · English · More languages coming</span>
+        <span class="gr-text">birigogo.gr · Διαδραστικές Εκπαιδευτικές Εφαρμογές · Ελληνικά · Αγγλικά · Περισσότερες γλώσσες έρχονται</span>
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ ABOUT ══════════════════════════════════════════════ -->
+  <section id="about">
+    <div class="about-inner">
+      <p class="section-label" style="text-align:center;">birigogo.gr</p>
+      <h2>
+        <span class="en-text">Our Purpose</span>
+        <span class="gr-text">Ο Σκοπός Μας</span>
+      </h2>
+
+      <ul class="about-list">
+        <li>
+          <span class="en-text">To introduce children to the great poets and storytellers of Ancient Greece.</span>
+          <span class="gr-text">Να γνωρίσει στα παιδιά τους μεγάλους ποιητές και αφηγητές της Αρχαίας Ελλάδας.</span>
+        </li>
+        <li>
+          <span class="en-text">To make mythology and ancient history accessible through audiovisual storytelling and interaction.</span>
+          <span class="gr-text">Να κάνει τη μυθολογία και την αρχαία ιστορία προσιτές μέσα από οπτικοακουστική αφήγηση και διάδραση.</span>
+        </li>
+        <li>
+          <span class="en-text">To open up the ideas, values and ethical questions that ancient literature explores.</span>
+          <span class="gr-text">Να φέρει το νεανικό κοινό σε επαφή με τις ιδέες, τις αξίες και τα ηθικά ερωτήματα που διερευνά η αρχαία λογοτεχνία.</span>
+        </li>
+        <li>
+          <span class="en-text">To use contemporary technology to keep the world's oldest stories alive for new generations.</span>
+          <span class="gr-text">Να αξιοποιήσει τη σύγχρονη τεχνολογία, ώστε οι αρχαιότερες ιστορίες του κόσμου να παραμείνουν ζωντανές.</span>
+        </li>
+      </ul>
+
+      <p style="font-family:var(--font-head); font-size:11px; letter-spacing:3px; color:var(--teal); text-align:center; margin-top:40px;">
+        BIRIGOGO.GR · INTERACTIVE EDUCATIONAL APPLICATIONS
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══ FOOTER ═════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">
+        <img src="images/logo.png" alt="Birigogo">
+      </a>
+
+      <div class="footer-social">
+        <a href="https://www.facebook.com/birigogo.gr" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/birigogo_applications/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://twitter.com/Birigogo_gr" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="mailto:info@birigogo.gr">Contact</a>
+      </div>
+
+      <div style="display:flex; gap:20px; align-items:center;">
+        <p class="footer-copy">© 2026 Birigogo</p>
+        <a href="/en/privacy-policy/" class="en-text" style="font-size:11px; color:var(--sand-dark); opacity:0.35; font-family:var(--font-head); letter-spacing:1px; text-transform:uppercase; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.35">Privacy Policy</a>
+        <a href="/politiki-aporritou/" class="gr-text" style="font-size:11px; color:var(--sand-dark); opacity:0.35; font-family:var(--font-head); letter-spacing:1px; text-transform:uppercase; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.35">Πολιτική Απορρήτου</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══ GOOGLE PLAY MODAL ════════════════════════════════════ -->
+  <div class="modal-overlay" id="googlePlayModal" onclick="closeGooglePlayModal(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeGooglePlayModal()">&times;</button>
+      <div class="modal-icon">▶</div>
+      <h3>
+        <span class="en-text">Coming to Google Play</span>
+        <span class="gr-text">Σύντομα στο Google Play</span>
+      </h3>
+      <p>
+        <span class="en-text">The app is currently available on the App Store. Google Play is coming very soon — stay tuned.</span>
+        <span class="gr-text">Η εφαρμογή είναι ήδη διαθέσιμη στο App Store. Το Google Play έρχεται πολύ σύντομα.</span>
+      </p>
+      <div class="modal-tag">
+        <span class="en-text">COMING SOON · ΕΡΧΕΤΑΙ ΣΥΝΤΟΜΑ</span>
+        <span class="gr-text">ΕΡΧΕΤΑΙ ΣΥΝΤΟΜΑ · COMING SOON</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ JAVASCRIPT ══════════════════════════════════════════ -->
+  <script>
+    /* ── LANGUAGE TOGGLE ── */
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.lang-btn[onclick*="' + lang + '"]').classList.add('active');
+      document.documentElement.lang = lang === 'gr' ? 'el' : 'en';
+    }
+
+    // Hide gr-text by default (EN is default)
+    (function() {
+      const style = document.createElement('style');
+      style.textContent = `
+        body.lang-en .gr-text { display: none; }
+        body.lang-gr .en-text { display: none; }
+      `;
+      document.head.appendChild(style);
+    })();
+
+
+    /* ── SLIDER ── */
+    const sliderState = {};
+
+    function initSlider(trackId) {
+      sliderState[trackId] = { current: 0 };
+    }
+
+    function slideTo(index, trackId, dotsId) {
+      const track = document.getElementById(trackId);
+      const slides = track.querySelectorAll('.slide');
+      const total = slides.length;
+      index = ((index % total) + total) % total;
+      sliderState[trackId] = { current: index };
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      const dots = document.getElementById(dotsId);
+      if (dots) {
+        dots.querySelectorAll('.dot').forEach((d, i) => {
+          d.classList.toggle('active', i === index);
+        });
+      }
+    }
+
+    function slideMove(dir, trackId, dotsId) {
+      const state = sliderState[trackId] || { current: 0 };
+      const track = document.getElementById(trackId);
+      const total = track.querySelectorAll('.slide').length;
+      slideTo(state.current + dir, trackId, dotsId);
+    }
+
+    // Init slider
+    initSlider('odysseyTrack');
+
+    // Auto-advance
+    setInterval(() => slideMove(1, 'odysseyTrack', 'odysseyDots'), 5000);
+
+    // Touch/swipe support
+    function addSwipe(trackId, dotsId) {
+      const el = document.getElementById(trackId).parentElement;
+      let startX = 0;
+      el.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      el.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) slideMove(diff > 0 ? 1 : -1, trackId, dotsId);
+      }, { passive: true });
+    }
+
+    addSwipe('odysseyTrack', 'odysseyDots');
+
+    /* ── GOOGLE PLAY MODAL ── */
+    function openGooglePlayModal() {
+      document.getElementById('googlePlayModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeGooglePlayModal(e) {
+      if (!e || e.target === document.getElementById('googlePlayModal')) {
+        document.getElementById('googlePlayModal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeGooglePlayModal();
+    });
+  </script>
+
+  <!-- ─── COOKIE BANNER ─────────────────────────────────── -->
+  <div id="cookieBanner" style="
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3000;
+    background: rgba(5,15,20,0.97);
+    border-top: 1px solid rgba(58,171,170,0.2);
+    backdrop-filter: blur(12px);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  ">
+    <p style="margin:0; font-family:'Lato',sans-serif; font-size:13px; color:#D4C8A8; line-height:1.6;">
+      <span class="en-text">We use cookies to ensure the website functions correctly.
+        <a href="/en/privacy-policy/" style="color:#3AABAA; text-decoration:underline;">Privacy Policy</a>
+      </span>
+      <span class="gr-text">Χρησιμοποιούμε cookies για τη σωστή λειτουργία του site.
+        <a href="/politiki-aporritou/" style="color:#3AABAA; text-decoration:underline;">Πολιτική Απορρήτου</a>
+      </span>
+    </p>
+    <button onclick="acceptCookies()" style="
+      flex-shrink: 0;
+      background: #3AABAA;
+      color: #0B1D26;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 24px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+    ">
+      <span class="en-text">Accept</span>
+      <span class="gr-text">Αποδοχή</span>
+    </button>
+  </div>
+
+  <script>
+    (function() {
+      if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookieBanner').style.display = 'flex';
+      }
+    })();
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', '1');
+      document.getElementById('cookieBanner').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
