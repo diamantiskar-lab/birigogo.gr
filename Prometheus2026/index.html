@@ -33,8 +33,6 @@ canvas{width:100%;height:100%;display:block;background:var(--ink);outline:none;t
 #rot{position:fixed;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:none;flex-direction:column;align-items:center;gap:8px;
   text-align:center;color:var(--gold);font-size:14px;font-weight:600;letter-spacing:.06em;padding:0 16px;line-height:1.4}
 #rot svg{width:44px;height:44px}
-body.portrait #rot{display:flex}
-body.portrait #wrap{align-items:start;padding-top:calc(env(safe-area-inset-top,0px) + 7vh)}
 #fs{position:fixed;z-index:5;display:flex;align-items:center;gap:8px;right:calc(8px + env(safe-area-inset-right,0px));top:calc(8px + env(safe-area-inset-top,0px));
   background:rgba(18,42,51,.72);color:var(--cream);border:1px solid rgba(247,231,198,.4);border-radius:99px;
   padding:7px;font:600 12px var(--body);letter-spacing:.06em;cursor:pointer;transition:opacity .4s}
@@ -42,8 +40,7 @@ body.portrait #wrap{align-items:start;padding-top:calc(env(safe-area-inset-top,0
 #fs span{display:none}
 #fs[hidden]{display:none}
 #fs.dim{opacity:.4}
-body.portrait #fs{top:auto;bottom:calc(175px + env(safe-area-inset-bottom,0px));right:50%;transform:translateX(50%);padding:8px 14px;opacity:1}
-body.portrait #fs span{display:inline}
+body.portrait #fs{display:none}
 #fs:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
 </head>
@@ -87,12 +84,13 @@ body.portrait #fs span{display:inline}
     const r = wrap.getBoundingClientRect(), cs = getComputedStyle(wrap);
     const W = r.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     const H = r.height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    const w = Math.min(W, H * 16 / 9);
-    stage.style.setProperty('--w', Math.floor(w) + 'px'); stage.style.setProperty('--h', Math.floor(w * 9 / 16) + 'px');
+    // Fill the whole screen, like the original Unity template: the app adapts itself to any aspect, portrait or landscape
+    const w = W;
+    stage.style.setProperty('--w', Math.floor(W) + 'px'); stage.style.setProperty('--h', Math.floor(H) + 'px');
     document.body.classList.toggle('portrait', H > W);
     const side = (W - w) / 2, b = document.getElementById('fs');
     if (b){ const roomy = side >= 46; b.style.right = roomy ? 'calc(' + Math.round((side - 36) / 2) + 'px + env(safe-area-inset-right,0px))' : '';
-      clearTimeout(fit.t); b.classList.remove('dim'); if (!roomy && H <= W) fit.t = setTimeout(() => b.classList.add('dim'), 4000); }
+      clearTimeout(fit.t); b.classList.remove('dim'); if (!roomy) fit.t = setTimeout(() => b.classList.add('dim'), 4000); }
   }
   addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 250));
   if (window.visualViewport) visualViewport.addEventListener('resize', fit);
